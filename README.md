@@ -1,6 +1,6 @@
 # Zaku FrameWork
 
-zaku framework是一个基于swoole、PHP7构建的简单框架，具有简单的框架功能，例如请求的处理与响应的处理，并且借助Swoole的httpd实现非阻塞高性能处理。框架目前还在开发中。
+zaku(杂鱼) framework是一个基于swoole、PHP7构建的简单框架，具有简单的框架功能，例如请求的处理与响应的处理，并且借助Swoole的httpd实现非阻塞高性能处理。
 
 ## 安装
 

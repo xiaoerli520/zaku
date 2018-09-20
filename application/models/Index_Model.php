@@ -4,6 +4,8 @@ class Index_Model
 {
     public function test()
     {
-        return "test";
+        global $mysql;
+        $res = $mysql -> query("select * from `bind_code`") -> fetchall();
+        return $res;
     }
 }

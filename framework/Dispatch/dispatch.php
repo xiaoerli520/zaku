@@ -38,7 +38,7 @@ class Dispatcher
         return self::$_inst;
     }
 
-    public function dispatch(string $c, string $m, Request $request, swoole_http_response $resp)
+    public function dispatch(string $c, string $m, Request $request, Response $resp)
     {
         $c = ucfirst($c);
         $m = "Action".ucfirst($m);
@@ -47,7 +47,7 @@ class Dispatcher
             throw new DispatchNotFound();
         }
         $res = $ic -> $m($request, $resp);
-        $resp -> write($res);
+        $resp -> body($res);
         return $resp;
     }
 }

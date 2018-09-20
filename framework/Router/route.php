@@ -213,7 +213,7 @@ class Router
             throw new RoutePathNotValid();
         }
         if (empty($pathArr[1])) {
-            $pathArr[1] = 'Base';
+            $pathArr[1] = 'Index';
         }
         return [
             'c' => $pathArr[0],

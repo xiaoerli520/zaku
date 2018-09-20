@@ -1,0 +1,8 @@
+/.idea
+.env
+*.log
+bin/
+/application/confs/*.ini
+*/.DS_Store
+.DS_Store
+.idea/

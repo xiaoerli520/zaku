@@ -11,7 +11,6 @@ class Index
 
     public function ActionTest()
     {
-        sleep(3);
         return json_encode(Config::get("app"));
     }
 }

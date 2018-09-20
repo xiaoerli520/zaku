@@ -10,6 +10,7 @@ class ConfTests extends TestCase
     {
         Config::loadConf(self::$path, "app");
         $res = Config::get('app');
+        print_r($res);
         $this -> assertEquals($res['name'], "value");
         $res1 = Config::get("abc");
         $this -> assertEquals($res1, false);

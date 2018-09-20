@@ -46,11 +46,8 @@ class Dispatcher
         if (!method_exists($ic, $m)) {
             throw new DispatchNotFound();
         }
-        $res = $ic -> $m($request);
+        $res = $ic -> $m($request, $resp);
         $resp -> write($res);
         return $resp;
     }
-
-
-
 }

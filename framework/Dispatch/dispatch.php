@@ -40,7 +40,6 @@ class Dispatcher
 
     public function dispatch(string $c, string $m, Request $request, swoole_http_response $resp)
     {
-
         $c = ucfirst($c);
         $m = "Action".ucfirst($m);
         $ic = new $c();

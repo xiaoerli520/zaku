@@ -32,14 +32,19 @@ class Response
         $this -> _resp -> redirect($url, $code);
     }
 
-    public function body(string $data)
+    public function body($data)
     {
         $this -> _resp -> write($data);
         return $this;
     }
 
-    public function end(string $content = '')
+    public function end($content = '')
     {
         $this -> _resp -> end($content);
+    }
+
+    public function getRequest()
+    {
+        return $this -> _resp;
     }
 }

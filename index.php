@@ -6,7 +6,7 @@ Config::loadConf(__DIR__ . '/application/confs/framework.ini', "framework");
 Config::loadConf(__DIR__ . '/application/confs/config.ini', "app");
 Config::loadConf(__DIR__ . '/application/confs/database.ini', "db");
 
-$router     = Router::getInstance();
+$router = Router::getInstance();
 
 $dispatcher = Dispatcher::getInstance();
 
@@ -21,13 +21,13 @@ function main(swoole_http_request $request, swoole_http_response $response)
     global $router, $dispatcher;
     try {
         $req      = new Request($request);
-        $resp  = new Response($response);
+        $resp     = new Response($response);
         $r        = $router->find($req->url());
         $response = $dispatcher->dispatch($r['c'], $r['m'], $req, $resp);
-        $response->end();
+        $response -> getRequest() -> end();
     } catch (\Exception $e) {
-        echo $e -> getTraceAsString().PHP_EOL;
-        $response->end("500 Server Error :: ".$e -> getTraceAsString());
+        echo $e->getTraceAsString() . PHP_EOL;
+        $response->getRequest() -> end("500 Server Error :: " . $e->getTraceAsString());
     }
 }
 

@@ -2,11 +2,11 @@
 
 class Index
 {
-    public function ActionIndex(Request $request)
+    public function ActionIndex(Request $request, Response $response)
     {
         $IndexModel = new Index_Model();
         $res = $IndexModel -> test();
-        return json_encode($res);
+        return $response -> body(json_encode($res));
     }
 
     public function ActionTest()

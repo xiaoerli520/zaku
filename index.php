@@ -6,7 +6,7 @@ require './application/Bootstrap.php';
 Bootstrap::initConfig();
 Bootstrap::initLogger();
 
-$router = Router::getInstance();
+$router     = Router::getInstance();
 $dispatcher = Dispatcher::getInstance();
 
 $mysql = new \Swoole\Database\MySQLi(Config::get("db"));
@@ -23,10 +23,10 @@ function main(swoole_http_request $request, swoole_http_response $response)
         $resp     = new Response($response);
         $r        = $router->find($req->url());
         $response = $dispatcher->dispatch($r['c'], $r['m'], $req, $resp);
-        $response -> getResponse() -> end();
+        $response->getResponse()->end();
     } catch (\Exception $e) {
         echo $e->getTraceAsString() . PHP_EOL;
-        $response->getResponse() -> end("500 Server Error :: " . $e->getTraceAsString());
+        $response->getResponse()->end("500 Server Error :: " . $e->getTraceAsString());
     }
 }
 

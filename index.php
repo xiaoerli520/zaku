@@ -5,13 +5,16 @@ require './framework/main.php';
 Config::loadConf(__DIR__ . '/application/confs/framework.ini', "framework");
 Config::loadConf(__DIR__ . '/application/confs/config.ini', "app");
 Config::loadConf(__DIR__ . '/application/confs/database.ini', "db");
+Logger::setPath("/tmp/zaku");
+Logger::setLevel(Logger::WARN);
 
 $router = Router::getInstance();
-
 $dispatcher = Dispatcher::getInstance();
 
 $mysql = new \Swoole\Database\MySQLi(Config::get("db"));
 $mysql->connect();
+
+Logger::error("asdf");
 
 $http = new swoole_http_server("0.0.0.0", 9501, SWOOLE_BASE);
 $http->set(Config::get("framework"));

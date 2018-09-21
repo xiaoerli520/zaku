@@ -19,7 +19,7 @@ class MySQLi
     /**
      * @var $mysqli \mysqli
      */
-    protected $mysqli;
+    protected  $mysqli;
 
     function __construct($db_config)
     {

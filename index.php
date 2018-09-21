@@ -1,12 +1,10 @@
 <?php
 
 require './framework/main.php';
+require './application/Bootstrap.php';
 
-Config::loadConf(__DIR__ . '/application/confs/framework.ini', "framework");
-Config::loadConf(__DIR__ . '/application/confs/config.ini', "app");
-Config::loadConf(__DIR__ . '/application/confs/database.ini', "db");
-Logger::setPath("/tmp/zaku");
-Logger::setLevel(Logger::WARN);
+Bootstrap::initConfig();
+Bootstrap::initLogger();
 
 $router = Router::getInstance();
 $dispatcher = Dispatcher::getInstance();
@@ -14,8 +12,8 @@ $dispatcher = Dispatcher::getInstance();
 $mysql = new \Swoole\Database\MySQLi(Config::get("db"));
 $mysql->connect();
 
-$http = new swoole_http_server("0.0.0.0", 9501, SWOOLE_BASE);
-$http->set(Config::get("framework"));
+$server = new swoole_http_server("0.0.0.0", 9501, SWOOLE_BASE);
+$server->set(Config::get("framework"));
 
 function main(swoole_http_request $request, swoole_http_response $response)
 {
@@ -32,13 +30,8 @@ function main(swoole_http_request $request, swoole_http_response $response)
     }
 }
 
-function errHandle()
-{
-    var_dump(error_get_last());
-}
+$server->on('request', 'main');
 
-$http->on('request', 'main');
+register_shutdown_function('Bootstrap::errHandler');
 
-register_shutdown_function('errHandle');
-
-$http->start();
+$server->start();

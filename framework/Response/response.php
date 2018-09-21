@@ -43,7 +43,7 @@ class Response
         $this -> _resp -> end($content);
     }
 
-    public function getRequest()
+    public function getResponse()
     {
         return $this -> _resp;
     }

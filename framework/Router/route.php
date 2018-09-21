@@ -223,6 +223,9 @@ class Router
 
     public function find(string $path)
     {
+        if (strpos($path, "favicon") !== false) {
+            return ['c' => 'favicon', 'm' => 'index'];
+        }
         switch ($this -> _mode) {
             case self::MODE_MAP:
                 return $this -> findMap($path);

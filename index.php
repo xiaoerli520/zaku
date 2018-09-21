@@ -26,7 +26,7 @@ function main(swoole_http_request $request, swoole_http_response $response)
         $response->getResponse()->end();
     } catch (\Exception $e) {
         echo $e->getTraceAsString() . PHP_EOL;
-        $response->getResponse()->end("500 Server Error :: " . $e->getTraceAsString());
+        $response->getResponse()->end("500 Server Error :: <br/>" . $e->getTraceAsString());
     }
 }
 

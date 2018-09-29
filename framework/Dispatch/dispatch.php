@@ -46,7 +46,13 @@ class Dispatcher
         if (!method_exists($ic, $m)) {
             throw new DispatchNotFound();
         }
+        if (method_exists($ic, 'beforeAction')) {
+            $ic -> beforeAction($request, $resp);
+        }
         $ic -> $m($request, $resp);
+        if (method_exists($ic, 'afterAction')) {
+            $ic -> afterAction($request, $resp);
+        }
         return $resp;
     }
 }

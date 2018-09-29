@@ -9,8 +9,8 @@ Bootstrap::initLogger();
 $router     = Router::getInstance();
 $dispatcher = Dispatcher::getInstance();
 
-$mysql = new \Swoole\Database\MySQLi(Config::get("db"));
-$mysql->connect();
+//$mysql = new \Swoole\Database\MySQLi(Config::get("db"));
+//$mysql->connect();
 
 $server = new swoole_http_server("0.0.0.0", 9501, SWOOLE_BASE);
 $server->set(Config::get("framework"));
@@ -22,6 +22,8 @@ function main(swoole_http_request $request, swoole_http_response $response)
         $req      = new Request($request);
         $resp     = new Response($response);
         $r        = $router->find($req->url());
+        // exec before request middlewares
+
         $response = $dispatcher->dispatch($r['c'], $r['m'], $req, $resp);
         $response->getResponse()->end();
     } catch (\Exception $e) {
@@ -30,8 +32,15 @@ function main(swoole_http_request $request, swoole_http_response $response)
     }
 }
 
+function onStart()
+{
+    echo "Zaku Server Start Successfully".PHP_EOL;
+}
+
 $server->on('request', 'main');
 
 register_shutdown_function('Bootstrap::errHandler');
+
+onStart();
 
 $server->start();

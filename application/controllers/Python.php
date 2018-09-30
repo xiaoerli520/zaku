@@ -1,12 +1,12 @@
 <?php
 
-class Php
+class Python
 {
     use ResultVO;
 
     public function ActionIndex(Request $request, Response $response)
     {
-        $model = new Php_Model();
+        $model = new Python_Model();
         $res = $model -> getList($request->query('page') ?? 1, $request -> query('page_size') ?? 10);
         $response -> body(ResultVO::success($res));
         return $response;
@@ -14,7 +14,7 @@ class Php
 
     public function ActionCreate(Request $request, Response $response)
     {
-        $model = new Php_Model();
+        $model = new Python_Model();
         if (!$request -> isPost()) {
             $response -> body(ResultVO::fail(-10000, [], "curr method not supported"));
             return $response;
@@ -30,7 +30,7 @@ class Php
 
     public function ActionDetail(Request $request, Response $response)
     {
-        $model = new Php_Model();
+        $model = new Python_Model();
 
         $detail = $model -> getDetail($request -> query('id'));
         $response -> body(ResultVO::success($detail));
@@ -39,7 +39,7 @@ class Php
 
     public function ActionModify(Request $request, Response $response)
     {
-        $model = new Php_Model();
+        $model = new Python_Model();
         if (!$request -> isPost()) {
             $response -> body(ResultVO::fail(-10000, [], "method not supported"));
             return $response;
@@ -55,7 +55,7 @@ class Php
 
     public function ActionDelete(Request $request, Response $response)
     {
-        $model = new Php_Model();
+        $model = new Python_Model();
         $result = $model -> delete($request -> query('id'));
         if ($result == false) {
             $response -> body(ResultVO::fail(-10001, [], "delete failed"));

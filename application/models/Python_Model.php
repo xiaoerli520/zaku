@@ -1,6 +1,6 @@
 <?php
 
-class PHP_Model
+class Python_Model
 {
     protected static $db = null;
 
@@ -18,12 +18,12 @@ class PHP_Model
         $offsets = self::$db->offsets($page, $pageSize);
         $limit   = self::$db->limit($page, $pageSize);
 
-        return self::$db->query("select * from `be_php` limit {$limit} offset {$offsets}")->fetchall();
+        return self::$db->query("select * from `be_python` limit {$limit} offset {$offsets}")->fetchall();
     }
 
     public function getDetail($id)
     {
-        return self::$db->query("select * from `be_php` where id={$id}")->fetch();
+        return self::$db->query("select * from `be_python` where id={$id}")->fetch();
     }
 
     public function create(string $title, string $content, string $tags, string $refers)
@@ -31,7 +31,7 @@ class PHP_Model
         $create = self::$db->createTime();
         $modify = self::$db->modifyTime();
 
-        return self::$db->query("insert into `be_php` (`title`, `content`, `modify_at`, `create_at`, `tags`, `refers`) values ('" . $title . "','" . $content . "', '" . $modify . "', '" . $create . "', '" . $tags . "', '" . $refers . "')");
+        return self::$db->query("insert into `be_python` (`title`, `content`, `modify_at`, `create_at`, `tags`, `refers`) values ('" . $title . "','" . $content . "', '" . $modify . "', '" . $create . "', '" . $tags . "', '" . $refers . "')");
     }
 
     public function modify(int $id, string $title, string $content, string $tags, string $refers)
@@ -41,7 +41,7 @@ class PHP_Model
         }
         $modify = self::$db->modifyTime();
 
-        return self::$db->query("update be_php set `title`='{$title}', `content`='{$content}', `tags`='{$tags}', `refers`='{$refers}', `modify_at`='{$modify}' where `id`={$id}");
+        return self::$db->query("update be_python set `title`='{$title}', `content`='{$content}', `tags`='{$tags}', `refers`='{$refers}', `modify_at`='{$modify}' where `id`={$id}");
     }
 
     public function delete(int $id)
@@ -49,7 +49,7 @@ class PHP_Model
         if (empty($id)) {
             return false;
         }
-        return self::$db->query("delete from be_php where `id`={$id}");
+        return self::$db->query("delete from be_python where `id`={$id}");
     }
 
 }

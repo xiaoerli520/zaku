@@ -43,7 +43,7 @@ class Request
 
     public function query(string $key)
     {
-        return $this -> _reuqest -> get[$key] ?? false;
+        return $this -> _reuqest -> get[$key] ?? null;
     }
 
     public function queries()
@@ -53,7 +53,7 @@ class Request
 
     public function param(string $key)
     {
-        return $this -> _reuqest -> post[$key] ?? false;
+        return $this -> _reuqest -> post[$key] ?? null;
     }
 
     public function params()
@@ -63,7 +63,7 @@ class Request
 
     public function cookie(string $key)
     {
-        return $this -> _reuqest -> cookie[$key] ?? false;
+        return $this -> _reuqest -> cookie[$key] ?? null;
     }
 
     public function cookies()

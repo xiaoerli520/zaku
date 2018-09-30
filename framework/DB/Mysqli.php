@@ -204,6 +204,27 @@ class MySQLi
         return $output;
     }
 
+    public function createTime()
+    {
+        return date("Y-m-d H:i:s",time());
+    }
+
+    public function modifyTime()
+    {
+        return date("Y-m-d H:i:s",time());
+    }
+
+    public function offsets($page, $pageSize)
+    {
+        return ($page - 1) * $pageSize;
+    }
+
+    public function limit($page, $pageSize)
+    {
+        echo "pagesize :: ".$pageSize.PHP_EOL;
+        return $pageSize;
+    }
+
     /**
      * 异步SQL
      * @param $sql

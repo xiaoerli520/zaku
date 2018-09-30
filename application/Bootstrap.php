@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/Results/ResultVO.php';
 
 class Bootstrap
 {

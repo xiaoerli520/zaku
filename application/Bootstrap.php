@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/Enums/ResultVO.php';
+require __DIR__ . '/Enums/PHPEnums.php';
 
 class Bootstrap
 {

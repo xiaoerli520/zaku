@@ -21,7 +21,10 @@ class Mock
     public function ActionRedis(Request $request, Response $response)
     {
         $redis = Bootstrap::getRedis();
-        $result = $redis->get("test_redis");
+        $result = $redis->get("test_redis11");
+        if (empty($result)) {
+            $response -> body("asdf");
+        }
         $response -> body($result);
         return $response;
     }

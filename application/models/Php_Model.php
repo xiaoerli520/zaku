@@ -24,7 +24,11 @@ class Php_Model
 
     public function getDetail($id)
     {
-        return self::$db->query("select * from `be_php` where id={$id}")->fetch();
+        $cache = self::$redis->get(sprintf(PHPEnums::CACHE_PREFIX,(string)$id));
+        if (empty($cache)) {
+            return self::$db->query("select * from `be_php` where id={$id}")->fetch();
+        }
+        return json_decode($cache, true);
     }
 
     public function create(string $title, string $content, string $tags, string $refers)
@@ -32,7 +36,15 @@ class Php_Model
         $create = self::$db->createTime();
         $modify = self::$db->modifyTime();
 
-        return self::$db->query("insert into `be_php` (`title`, `content`, `modify_at`, `create_at`, `tags`, `refers`) values ('" . $title . "','" . $content . "', '" . $modify . "', '" . $create . "', '" . $tags . "', '" . $refers . "')");
+        $result = self::$db->query("insert into `be_php` (`title`, `content`, `modify_at`, `create_at`, `tags`, `refers`) values ('" . $title . "','" . $content . "', '" . $modify . "', '" . $create . "', '" . $tags . "', '" . $refers . "')");
+        if ($result > 0) {
+            // update cache
+            $id = self::$db->Insert_ID();
+            self::$redis->set(sprintf(PHPEnums::CACHE_PREFIX, $id), json_encode(['id' => $id,'title' => $title, 'content' => $content, 'tags' => $tags, 'refers' => $refers, 'modify_at' => $modify]));
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function modify(int $id, string $title, string $content, string $tags, string $refers)
@@ -42,7 +54,15 @@ class Php_Model
         }
         $modify = self::$db->modifyTime();
 
-        return self::$db->query("update be_php set `title`='{$title}', `content`='{$content}', `tags`='{$tags}', `refers`='{$refers}', `modify_at`='{$modify}' where `id`={$id}");
+        $result = self::$db->query("update be_php set `title`='{$title}', `content`='{$content}', `tags`='{$tags}', `refers`='{$refers}', `modify_at`='{$modify}' where `id`={$id}");
+        if ($result > 0) {
+            // update cache
+            self::$redis->set(sprintf(PHPEnums::CACHE_PREFIX, $id), json_encode(['id' => $id,'title' => $title, 'content' => $content, 'tags' => $tags, 'refers' => $refers, 'modify_at' => $modify]));
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     public function delete(int $id)
@@ -50,6 +70,7 @@ class Php_Model
         if (empty($id)) {
             return false;
         }
+        self::$redis -> delete(sprintf(PHPEnums::CACHE_PREFIX, $id));
         return self::$db->query("delete from be_php where `id`={$id}");
     }
 

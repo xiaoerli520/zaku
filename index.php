@@ -6,6 +6,7 @@ require './application/Bootstrap.php';
 Bootstrap::initConfig();
 Bootstrap::initLogger();
 Bootstrap::initMysql();
+Bootstrap::initRedis("127.0.0.1", 6379);
 
 $router     = Router::getInstance();
 $dispatcher = Dispatcher::getInstance();

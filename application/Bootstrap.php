@@ -1,9 +1,11 @@
 <?php
-require __DIR__ . '/Results/ResultVO.php';
+require __DIR__ . '/Enums/ResultVO.php';
 
 class Bootstrap
 {
     public static $mysql = null;
+
+    public static $redis = null;
 
     public static function initMysql()
     {
@@ -17,6 +19,11 @@ class Bootstrap
             self::initMysql();
         }
         return self::$mysql;
+    }
+
+    public static function getRedis()
+    {
+        return self::$redis;
     }
 
     public static function initConfig()
@@ -35,6 +42,13 @@ class Bootstrap
     public static function errHandler()
     {
         var_dump(error_get_last());
+    }
+
+    public static function initRedis($host, $port)
+    {
+        $redis = new \Redis();
+        $redis -> pconnect($host, $port);
+        self::$redis = $redis;
     }
 
 }

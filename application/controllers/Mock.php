@@ -17,4 +17,12 @@ class Mock
         $response -> body(json_encode(['title' => 'test title', 'content' => 'test content']));
         return $response;
     }
+
+    public function ActionRedis(Request $request, Response $response)
+    {
+        $redis = Bootstrap::getRedis();
+        $result = $redis->get("test_redis");
+        $response -> body($result);
+        return $response;
+    }
 }

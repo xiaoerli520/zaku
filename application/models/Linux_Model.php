@@ -4,13 +4,14 @@ class Linux_Model
 {
     protected static $db = null;
 
+    protected static $redis = null;
+
     public function __construct()
     {
         if (self::$db === null) {
             self::$db = Bootstrap::getMysql();
+            self::$redis = Bootstrap::getRedis();
         }
-
-        return self::$db;
     }
 
     public function getList($page, $pageSize)

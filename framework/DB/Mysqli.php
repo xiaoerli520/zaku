@@ -221,7 +221,6 @@ class MySQLi
 
     public function limit($page, $pageSize)
     {
-        echo "pagesize :: ".$pageSize.PHP_EOL;
         return $pageSize;
     }
 

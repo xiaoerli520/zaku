@@ -2,6 +2,22 @@
 
 class Bootstrap
 {
+    public static $mysql = null;
+
+    public static function initMysql()
+    {
+        self::$mysql = new \Swoole\Database\MySQLi(Config::get("db"));
+        self::$mysql->connect();
+    }
+
+    public static function getMysql()
+    {
+        if (self::$mysql !== null) {
+            self::initMysql();
+        }
+        return self::$mysql;
+    }
+
     public static function initConfig()
     {
         Config::loadConf(__DIR__ . '/confs/framework.ini', "framework");
@@ -19,4 +35,5 @@ class Bootstrap
     {
         var_dump(error_get_last());
     }
+
 }

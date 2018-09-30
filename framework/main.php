@@ -11,4 +11,3 @@ require __DIR__ . '/DB/Mysqli.php';
 require __DIR__ . '/Logger/Logger.php';
 require __DIR__ . '/Utils/Convert.php';
 require __DIR__ . '/Utils/Register.php';
-require __DIR__ . '/Middleware/middleware.php';

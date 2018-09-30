@@ -26,7 +26,16 @@ class Php_Model
     {
         $cache = self::$redis->get(sprintf(PHPEnums::CACHE_PREFIX,(string)$id));
         if (empty($cache)) {
-            return self::$db->query("select * from `be_php` where id={$id}")->fetch();
+            $result = self::$db->query("select * from `be_php` where id={$id}")->fetch();
+            self::$redis -> set(sprintf(PHPEnums::CACHE_PREFIX, $id), json_encode([
+                'id' => $result['id'],
+                'title' => $result['title'],
+                'content' => $result['content'],
+                'tags' => $result['tags'],
+                'refers'=> $result['refers'],
+                'modify_at' => $result['modify_at']
+            ]));
+            return $result;
         }
         return json_decode($cache, true);
     }
@@ -40,7 +49,14 @@ class Php_Model
         if ($result > 0) {
             // update cache
             $id = self::$db->Insert_ID();
-            self::$redis->set(sprintf(PHPEnums::CACHE_PREFIX, $id), json_encode(['id' => $id,'title' => $title, 'content' => $content, 'tags' => $tags, 'refers' => $refers, 'modify_at' => $modify]));
+            self::$redis->set(sprintf(PHPEnums::CACHE_PREFIX, $id), json_encode([
+                'id' => $id,
+                'title' => $title,
+                'content' => $content,
+                'tags' => $tags,
+                'refers' => $refers,
+                'modify_at' => $modify
+            ]));
             return true;
         }else{
             return false;
@@ -57,7 +73,14 @@ class Php_Model
         $result = self::$db->query("update be_php set `title`='{$title}', `content`='{$content}', `tags`='{$tags}', `refers`='{$refers}', `modify_at`='{$modify}' where `id`={$id}");
         if ($result > 0) {
             // update cache
-            self::$redis->set(sprintf(PHPEnums::CACHE_PREFIX, $id), json_encode(['id' => $id,'title' => $title, 'content' => $content, 'tags' => $tags, 'refers' => $refers, 'modify_at' => $modify]));
+            self::$redis->set(sprintf(PHPEnums::CACHE_PREFIX, $id), json_encode([
+                'id' => $id,
+                'title' => $title,
+                'content' => $content,
+                'tags' => $tags,
+                'refers' => $refers,
+                'modify_at' => $modify
+            ]));
             return true;
         }else{
             return false;
